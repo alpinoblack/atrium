@@ -17,6 +17,10 @@ sealed class Option<out T> {
         is Some -> f(value)
         None -> default()
     }
+
+    companion object {
+        operator fun <T : Any> invoke(t: T?): Option<T> = if (t == null) None else Some(t)
+    }
 }
 
 inline fun <T> Option<T>.getOrElse(default: () -> T): T = fold(default) { it }

@@ -8,6 +8,7 @@ import ch.tutteli.atrium.creating.*
 import ch.tutteli.atrium.domain.creating.changers.SubjectChanger
 import ch.tutteli.atrium.domain.robstoll.lib.creating.changers._changeSubject
 import ch.tutteli.atrium.domain.robstoll.lib.creating.changers._changeSubjectUnreported
+import ch.tutteli.atrium.domain.robstoll.lib.creating.throwable.thrown.creators.ThrowableThrownFailureHandler
 import ch.tutteli.atrium.reporting.SHOULD_NOT_BE_SHOWN_TO_THE_USER_BUG_TRANSLATABLE
 import ch.tutteli.atrium.reporting.translating.Translatable
 import ch.tutteli.atrium.reporting.translating.Untranslatable
@@ -25,6 +26,7 @@ class SubjectChangerImpl : SubjectChanger {
         representation: Any,
         canBeTransformed: (T) -> Boolean,
         transformation: (T) -> R,
+        failureHandler: SubjectChanger.FailureHandler<T, R>,
         subAssertions: (Expect<R>.() -> Unit)?
     ): Expect<R> = _changeSubject(
         originalAssertionContainer,
@@ -32,6 +34,7 @@ class SubjectChangerImpl : SubjectChanger {
         representation,
         canBeTransformed,
         transformation,
+        failureHandler,
         subAssertions
     )
 
